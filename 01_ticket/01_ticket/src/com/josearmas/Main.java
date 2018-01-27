@@ -13,16 +13,16 @@ public class Main {
 
         Ticket t = new Ticket();
 
-        System.out.println("Fecha: ");
+        System.out.print("Fecha: ");
         t.setFecha("24/01/2018");
-        System.out.println(t.getFecha());
-        System.out.println("Hora: ");
+        System.out.print(t.getFecha()+"----");
+        System.out.print("Hora: ");
         t.setHora("21:00");
         System.out.println(t.getHora());
 
         int contador = 0;
         char respuesta;
-
+        double total = 0;
         do{
             System.out.println("¿Nuevo producto (S/N)?: ");
             respuesta = br.readLine().toUpperCase().charAt(0);
@@ -35,13 +35,9 @@ public class Main {
             t.getLineas().get(contador).setUds(Integer.parseInt(br.readLine()));
             t.getLineas().get(contador).totalLinea();
             contador++;
-
-
-        }while(contador<5 || respuesta !='N');
-
-        double total = 0;
-
+        }while( respuesta =='S');
         System.out.println("-------------- TICKET Nº "+t.getNumero()+" -------------------");
+
         System.out.println(t.toString());
         for (int i = 0; i <t.getLineas().size(); i++) {
             System.out.println("Producto: "+t.getLineas().get(i).getProducto());
