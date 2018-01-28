@@ -11,7 +11,7 @@ public class Empleado {
     private String fechaContrato;
 
     //Asociacion
-    private List<Empresa>empresas = new ArrayList<>();
+    private Empresa empresa;
 
     public Empleado() {
     }
@@ -55,11 +55,11 @@ public class Empleado {
         this.fechaContrato = fechaContrato;
     }
 
-    public List<Empresa> getEmpresas() {
-        return empresas;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public void setEmpresas(List<Empresa> empresas) {
-        this.empresas = empresas;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 }

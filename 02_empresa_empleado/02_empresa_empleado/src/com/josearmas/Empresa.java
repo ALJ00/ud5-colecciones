@@ -12,13 +12,18 @@ public class Empresa {
     private List<Empleado>empleados = new ArrayList<>();
 
     public Empresa() {
+        Empleado e = new Empleado();
+        e.setEmpresa(this);
+        empleados.add(e);
 
-    }
+        }
 
-    public Empresa(String nombre, String anyoFundacion) {
-        this.nombre = nombre;
-        this.anyoFundacion = anyoFundacion;
-    }
+        public void crearEmpresa(String nombre, String anyoFundacion){
+            this.nombre = nombre;
+            this.anyoFundacion = anyoFundacion;
+        }
+
+
 
     public String getNombre() {
         return nombre;
@@ -42,5 +47,13 @@ public class Empresa {
 
     public void setEmpleados(List<Empleado> empleados) {
         this.empleados = empleados;
+    }
+
+    @Override
+    public String toString() {
+        return "Empresa{" +
+                "nombre='" + nombre + '\'' +
+                ", anyoFundacion='" + anyoFundacion + '\'' +
+                '}';
     }
 }

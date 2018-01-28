@@ -13,13 +13,13 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        List<Empresa>empresaList = new ArrayList<>();
-        List<Empleado>empleadoList = new ArrayList<>();
 
         char opcion;
+        List<Empresa> empresaList = new ArrayList<>();
+        int recorre = 0;
 
 
-        do{
+        do {
             System.out.println("1.Crear nueva empresa.\n" +
                     "2.Añadir empleado a empresa ya existente.\n" +
                     "3.Listado de empresas.\n" +
@@ -34,7 +34,8 @@ public class Main {
                     String nombre = br.readLine().toUpperCase();
                     System.out.println("Año de fundación: ");
                     String fund = br.readLine();
-                    Empresa e = new Empresa(nombre,fund);
+                    Empresa e = new Empresa();
+                    e.crearEmpresa(nombre, fund);
                     empresaList.add(e);
                     break;
                 case '2':
@@ -46,37 +47,46 @@ public class Main {
                     String fecha = br.readLine();
                     System.out.println("Fecha Contrato: ");
                     String contrato = br.readLine();
-                    Empleado empleado = new Empleado(nom,ape,fecha,contrato);
+                    Empleado empleado = new Empleado(nom, ape, fecha, contrato);
                     System.out.println("Empresa en la que se le va a contratar: ");
                     String respuesta = br.readLine();
-                    if(empresaList.size()==0){
-                        System.out.println("No hay empresas creadas, cree la empresa o asócielo a otra");
-                    }
-                    for (int i = 0; i < empresaList.size(); i++) {
-                        if(respuesta.equalsIgnoreCase(empresaList.get(i).getNombre())){
-                            empleadoList.add(empleado);
-                            empresaList.get(i).getEmpleados().
-                            empleado.getEmpresas().add(empresaList.get(i));
-
+                    if (empresaList.size() == 0) {
+                        System.out.println("No hay empresas creadas");
+                    } else {
+                        for (int i = 0; i < empresaList.size(); i++) {
+                            if (empresaList.get(i).getNombre().equalsIgnoreCase(respuesta)) {
+                                empresaList.get(i).getEmpleados().add(empleado);
+                            }
                         }
-
                     }
-
-
                     break;
                 case '3':
+                    for (int i = 0; i < empresaList.size(); i++) {
+                        System.out.println(empresaList.get(i).toString());
+                    }
                     break;
                 case '4':
+                    for (int i = 0; i < empresaList.size(); i++) {
+                        System.out.println("Empresa: " + empresaList.get(i).getNombre());
+                        System.out.println("Año fundación: " + empresaList.get(i).getAnyoFundacion());
+                        for (int j = 0; j < empresaList.size(); j++) {
+                            System.out.println("Empleado: " + empresaList.get(i).getEmpleados().get(i).getNombre());
+                            System.out.println("Apellidos: " + empresaList.get(i).getEmpleados().get(i).getApellidos());
+                            System.out.println("Fecha Nacimiento: " + empresaList.get(i).getEmpleados().get(i).getFechaNacimiento());
+                            System.out.println("Fecha Contrato: " + empresaList.get(i).getEmpleados().get(i).getFechaContrato());
+                        }
+                        System.out.println("-----------------------------");
+                    }
                     break;
                 case '5':
+                    System.out.println("Adios");
                     break;
                 default:
                     System.out.println("Error....");
 
             }
 
-        }while(opcion != '5');
-
+        } while (opcion != '5');
 
 
     }
