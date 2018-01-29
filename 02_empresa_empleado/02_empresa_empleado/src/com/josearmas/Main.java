@@ -56,25 +56,33 @@ public class Main {
                         for (int i = 0; i < empresaList.size(); i++) {
                             if (empresaList.get(i).getNombre().equalsIgnoreCase(respuesta)) {
                                 empresaList.get(i).getEmpleados().add(empleado);
+                                empleado.setEmpresa(empresaList.get(i));
                             }
                         }
                     }
                     break;
                 case '3':
-                    for (int i = 0; i < empresaList.size(); i++) {
-                        System.out.println(empresaList.get(i).toString());
+                    if(empresaList.size()==0){
+                        System.out.println("No hay empresas creadas");
+                    }else{
+                        for (int i = 0; i < empresaList.size(); i++) {
+                            System.out.println(empresaList.get(i).toString());
+                        }
                     }
                     break;
                 case '4':
                     for (int i = 0; i < empresaList.size(); i++) {
                         System.out.println("Empresa: " + empresaList.get(i).getNombre());
                         System.out.println("Año fundación: " + empresaList.get(i).getAnyoFundacion());
-                        for (int j = 0; j < empresaList.size(); j++) {
-                            System.out.println("Empleado: " + empresaList.get(i).getEmpleados().get(i).getNombre());
-                            System.out.println("Apellidos: " + empresaList.get(i).getEmpleados().get(i).getApellidos());
-                            System.out.println("Fecha Nacimiento: " + empresaList.get(i).getEmpleados().get(i).getFechaNacimiento());
-                            System.out.println("Fecha Contrato: " + empresaList.get(i).getEmpleados().get(i).getFechaContrato());
+                        System.out.println("-------------------------------");
+                        List<Empleado> empleados = empresaList.get(i).getEmpleados();
+                        for (int j = 0; j < empleados.size(); j++) {
+                            System.out.println("Empleado: " +empleados.get(j).getNombre());
+                            System.out.println("Apellidos: " + empleados.get(j).getApellidos());
+                            System.out.println("Fecha Nacimiento: " + empleados.get(j).getFechaNacimiento());
+                            System.out.println("Fecha Contrato: " + empleados.get(j).getFechaContrato());
                         }
+                        System.out.println("-----------------------------");
                         System.out.println("-----------------------------");
                     }
                     break;

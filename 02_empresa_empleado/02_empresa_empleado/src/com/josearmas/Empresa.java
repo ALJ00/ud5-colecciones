@@ -12,9 +12,11 @@ public class Empresa {
     private List<Empleado>empleados = new ArrayList<>();
 
     public Empresa() {
+/*
         Empleado e = new Empleado();
         e.setEmpresa(this);
         empleados.add(e);
+*/
 
         }
 
