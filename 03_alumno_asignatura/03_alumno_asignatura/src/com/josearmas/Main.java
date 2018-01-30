@@ -81,20 +81,37 @@ public class Main {
                 case '4':
                     System.out.println("Alumnos matriculados en una asignatura, elija la asignatura a mostrar:  ");
                     for (int i = 0; i < asignaturaList.size(); i++) {
-                        System.out.println(i+" "+asignaturaList.get(i).getNombre());
+                        System.out.println(asignaturaList.get(i).getNombre());
                     }
                     System.out.print("Asignatura nº: ");
-                    int numero = Integer.parseInt(br.readLine());
+                    String as = br.readLine().toUpperCase();
 
-                    System.out.println(asignaturaList.get(numero).getNombre());
 
-                    for (int i = 0; i < alumnoList.size(); i++) {
-                        System.out.println("Nombre: "+asignaturaList.get(numero).getAlumnos().get(i).getNombre());
-                        System.out.println("Apellidos: "+asignaturaList.get(numero).getAlumnos().get(i).getApellido());
+                    for (int i = 0; i < asignaturaList.size(); i++) {
+                        if(asignaturaList.get(i).getNombre().equalsIgnoreCase(as)){
+                            for (int j = 0; j < alumnoList.size(); j++) {
+                                System.out.println("Nombre: "+alumnoList.get(j).getNombre());
+                                System.out.println("Apellidos: "+alumnoList.get(j).getApellido());
+                            }
+                        }
                     }
-
                     break;
                 case '5':
+                    for (int i = 0; i < alumnoList.size(); i++) {
+                        System.out.println(i+" "+alumnoList.get(i).getNombre());
+                    }
+                    int contador =0;
+                    System.out.println("Seleccione alumno, nº: ");
+                    int num = Integer.parseInt(br.readLine());
+                    System.out.println("El alumno "+alumnoList.get(num).getNombre()+" "+alumnoList.get(num).getApellido()+" está matriculado en: ");
+                    for (int i = 0; i < asignaturaList.size(); i++) {
+                        System.out.println(alumnoList.get(num).getAsignaturas().get(i).getNombre()+"---"+
+                                alumnoList.get(num).getAsignaturas().get(i).getHorasSemanales()+" horas a la semana ");
+                        contador = contador+alumnoList.get(num).getAsignaturas().get(i).getHorasSemanales();
+                    }
+
+                    System.out.println("Total hora de clase del alumno: "+contador);
+
                     break;
                 case '6':
                     System.out.println("Adios");

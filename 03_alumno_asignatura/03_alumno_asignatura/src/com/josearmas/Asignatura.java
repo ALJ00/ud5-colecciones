@@ -40,4 +40,11 @@ public class Asignatura {
     public void setAlumnos(List<Alumno> alumnos) {
         this.alumnos = alumnos;
     }
+
+
+    @Override
+    public String toString() {
+        return "nombre='" + nombre + '\'' +
+                ", horasSemanales=" + horasSemanales ;
+    }
 }
