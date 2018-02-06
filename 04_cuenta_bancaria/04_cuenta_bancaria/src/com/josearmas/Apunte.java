@@ -1,18 +1,18 @@
 package com.josearmas;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Apunte {
 
     private double cantidad;
     private String fecha;
 
-    //Asociación
-    CuentaBancaria cuentaBancaria;
+    //Conexion
+    private Cuenta cuenta;
+
+    public Apunte() {
+    }
 
     public Apunte(double cantidad, String fecha) {
-        this.cantidad = this.cantidad;
+        this.cantidad = cantidad;
         this.fecha = fecha;
     }
 
@@ -32,11 +32,11 @@ public class Apunte {
         this.fecha = fecha;
     }
 
-    public CuentaBancaria getCuentaBancaria() {
-        return cuentaBancaria;
+    public Cuenta getCuenta() {
+        return cuenta;
     }
 
-    public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
-        this.cuentaBancaria = cuentaBancaria;
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
 }

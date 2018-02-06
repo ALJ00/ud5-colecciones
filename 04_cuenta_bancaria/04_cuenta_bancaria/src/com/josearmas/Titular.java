@@ -5,35 +5,35 @@ import java.util.List;
 
 public class Titular {
 
-    private String nombre;
-    private String apellidos;
+    private String nombreTitular;
+    private String apellidoTitular;
     private String DNI;
     private String fechaAlta;
 
-    //Asociación
-    private List<CuentaBancaria>cuentaBancariaList = new ArrayList<>();
+    //Conexión
+    private List<Cuenta> cuentas = new ArrayList<>();
 
-    public Titular(String nombre, String apellidos, String DNI, String fechaAlta) {
-        this.nombre = nombre;
-        this.apellidos = apellidos;
+    public Titular(String nombreTitular, String apellidoTitular, String DNI, String fechaAlta) {
+        this.nombreTitular = nombreTitular;
+        this.apellidoTitular = apellidoTitular;
         this.DNI = DNI;
         this.fechaAlta = fechaAlta;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreTitular() {
+        return nombreTitular;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreTitular(String nombreTitular) {
+        this.nombreTitular = nombreTitular;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getApellidoTitular() {
+        return apellidoTitular;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellidoTitular(String apellidoTitular) {
+        this.apellidoTitular = apellidoTitular;
     }
 
     public String getDNI() {
@@ -52,9 +52,7 @@ public class Titular {
         this.fechaAlta = fechaAlta;
     }
 
-    public List<CuentaBancaria> getCuentaBancariaList() {
-        return cuentaBancariaList;
+    public List<Cuenta> getCuentas() {
+        return cuentas;
     }
-
-
 }

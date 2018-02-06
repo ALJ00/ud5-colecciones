@@ -2,34 +2,26 @@ package com.josearmas;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class CuentaBancaria {
-
+public class Cuenta {
 
     private String codigoCuenta;
 
-    //Asociación
+    //Conexión
     private List<Titular>titulares = new ArrayList<>();
-    private List<Apunte>apunteList = new ArrayList<>();
+    private List<Apunte>apuntes = new ArrayList<>();
 
-
-    public CuentaBancaria(String codigoCuenta) {
+    public Cuenta(String codigoCuenta) {
         this.codigoCuenta = codigoCuenta;
     }
 
     public double calcularSaldo(){
 
-        double saldo = 0;
-
-        for (int i = 0; i < apunteList.size(); i++) {
-            saldo = apunteList.get(i).getCantidad()+saldo;
-        }
-
-        return saldo;
+        return 0.0;
     }
 
-    public void nuevoApunte( double cantidad ){
+    public void nuevoApunte( double cantidad){
+
 
     }
 
@@ -46,10 +38,6 @@ public class CuentaBancaria {
     }
 
     public List<Apunte> getApuntes() {
-        return apunteList;
-    }
-
-    public List<Apunte> getApunteList() {
-        return apunteList;
+        return apuntes;
     }
 }

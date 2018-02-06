@@ -9,16 +9,18 @@ import java.util.TreeSet;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException  {
 	// write your code here
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        Set<Persona> conjuntoPersonas2 = new HashSet<>();
         Set<Persona> conjuntoPersonas1 = new HashSet<>();
+        Set<Persona> conjuntoPersonas2 = new HashSet<>();
 
 
-        System.out.println("Datos para el conjunto 2: \n"+
+
+
+        System.out.println("Datos para el conjunto 1: \n"+
         "------------------------------------");
         for (int i = 0; i < 2; i++) {
             System.out.println("Nombre: ");
@@ -29,7 +31,7 @@ public class Main {
             conjuntoPersonas1.add(people1);
         }
 
-        System.out.println("Datos para el conjunto 1: \n"+
+        System.out.println("Datos para el conjunto 2: \n"+
                 "------------------------------------");
 
         for (int i = 0; i < 2; i++) {
@@ -42,14 +44,15 @@ public class Main {
         }
 
         //Operaciones de los conjuntos:
-        //Unión con duplicados
+        //Unión  duplicados
         conjuntoPersonas1.addAll(conjuntoPersonas2);
-
+        System.out.println("Con duplicados:");
         for (Persona grupo2:conjuntoPersonas1) {
             System.out.println(grupo2.getNombre()+"--"+grupo2.getDNI());
         }
 
         System.out.println("------------------");
+        System.out.println("Sin duplicados:");
 
         //Unión con los elementos comunes, sin duplicados:
         conjuntoPersonas1.retainAll(conjuntoPersonas2);
@@ -61,12 +64,17 @@ public class Main {
         System.out.println("---------------------------");
 
         //Diferencia entre ambos conjuntos:
-        conjuntoPersonas1.removeAll(conjuntoPersonas2);
+        conjuntoPersonas2.removeAll(conjuntoPersonas1);
 
         for (Persona grupo2:conjuntoPersonas1) {
             System.out.println(grupo2.getNombre()+"--"+grupo2.getDNI());
         }
 
 
+
+
+
+
     }
+
 }
