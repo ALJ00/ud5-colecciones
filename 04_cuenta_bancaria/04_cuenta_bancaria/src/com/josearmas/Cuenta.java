@@ -16,13 +16,17 @@ public class Cuenta {
     }
 
     public double calcularSaldo(){
-
-        return 0.0;
+        double saldo = 0.0;
+        for (int i = 0; i < apuntes.size(); i++) {
+            saldo = saldo+apuntes.get(i).getCantidad();
+        }
+        return saldo;
     }
 
     public void nuevoApunte( double cantidad){
-
-
+        Apunte apunte = new Apunte();
+        apuntes.add(apunte);
+        apunte.setCuenta(this);
     }
 
     public String getCodigoCuenta() {
