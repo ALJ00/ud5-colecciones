@@ -111,7 +111,22 @@ public class Main {
                                 System.out.println(i+"."+cuentasMain.get(i).getCodigoCuenta());
                             }
                             int resp = Integer.parseInt(br.readLine());
-                            Apunte a = cuentasMain.get(resp).getApuntes();
+                            Cuenta c = cuentasMain.get(resp);
+
+
+                            // 1
+                            for (int i = 0; i < c.getApuntes().size(); i++) {
+                                c.getApuntes().get(i).setCuenta(null);
+                            }
+
+                            // 2
+                            cuentasMain.remove(resp);
+
+                            // 3
+                            for (int i = 0; i < c.getTitulares().size(); i++) {
+                                c.getTitulares().get(i).getCuentas().remove(c);
+                            }
+                            
                             cuentasMain.get(resp).getApuntes().clear();
 
                             break;

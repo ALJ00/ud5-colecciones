@@ -24,7 +24,7 @@ public class Cuenta {
     }
 
     public void nuevoApunte( double cantidad){
-        Apunte apunte = new Apunte();
+        Apunte apunte = new Apunte(cantidad, "hoy");
         apuntes.add(apunte);
         apunte.setCuenta(this);
     }

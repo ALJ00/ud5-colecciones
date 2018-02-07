@@ -18,8 +18,6 @@ public class Main {
         Set<Persona> conjuntoPersonas2 = new HashSet<>();
 
 
-
-
         System.out.println("Datos para el conjunto 1: \n"+
         "------------------------------------");
         for (int i = 0; i < 2; i++) {
@@ -44,6 +42,12 @@ public class Main {
         }
 
         //Operaciones de los conjuntos:
+
+        //Conjunto formado por todas las personas sin duplicados
+
+
+
+
         //Unión  duplicados
         conjuntoPersonas1.addAll(conjuntoPersonas2);
         System.out.println("Con duplicados:");
@@ -64,7 +68,8 @@ public class Main {
         System.out.println("---------------------------");
 
         //Diferencia entre ambos conjuntos:
-        conjuntoPersonas2.removeAll(conjuntoPersonas1);
+        Set<Persona> diferencia = new HashSet<>();
+        diferencia = conjuntoPersonas2.removeAll(conjuntoPersonas1);
 
         for (Persona grupo2:conjuntoPersonas1) {
             System.out.println(grupo2.getNombre()+"--"+grupo2.getDNI());

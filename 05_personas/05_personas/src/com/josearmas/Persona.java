@@ -25,15 +25,15 @@ public class Persona {
     }
 
     @Override
-    public boolean equals(Persona p2) {
-
-        return getDNI().equals(p2.getDNI());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Persona persona = (Persona) o;
+        return DNI.equals(persona.DNI);
     }
 
     @Override
     public int hashCode() {
-        int result = getNombre() != null ? getNombre().hashCode() : 0;
-        result = 31 * result + (getDNI() != null ? getDNI().hashCode() : 0);
-        return result;
+        return DNI.hashCode();
     }
 }
