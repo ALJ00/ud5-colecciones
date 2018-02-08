@@ -126,7 +126,7 @@ public class Main {
                             for (int i = 0; i < c.getTitulares().size(); i++) {
                                 c.getTitulares().get(i).getCuentas().remove(c);
                             }
-                            
+
                             cuentasMain.get(resp).getApuntes().clear();
 
                             break;
