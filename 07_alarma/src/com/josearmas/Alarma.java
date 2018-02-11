@@ -88,5 +88,18 @@ public class Alarma {
         return sensores;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Alarma alarma = (Alarma) o;
+
+        return pin == alarma.pin;
+    }
+
+    @Override
+    public int hashCode() {
+        return pin;
+    }
 }

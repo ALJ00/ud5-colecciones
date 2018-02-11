@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -14,7 +15,7 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        HashMap<Integer, Alarma> alarmas = new HashMap<>();
+        List<Alarma> alarmas = new ArrayList<>();
 
         int opcion;
 
@@ -34,35 +35,72 @@ public class Main {
                     int numeroTelefono = Integer.parseInt(br.readLine());
                     //Creo un objeto alarma.
                     Alarma alarma = new Alarma(numeroTelefono);
-                    alarmas.put(numeroTelefono, alarma);
-                    //int uno = 1;
+                    alarmas.add(alarma);
+                    int uno = 1;
                     break;
                 case 2:
                     System.out.println("Desactivar alarma: ");
                     System.out.println("-------------------------");
-                    int intentos = 3;
-                    do {
-                        System.out.println("Introduzca el código pin, sólo tiene " + intentos + " intentos:");
-                        int codigo = Integer.parseInt(br.readLine());
-                        if (alarmas.isEmpty()) {
-                            System.out.println("No hay alarmas activadas...");
-                        } else if (alarmas.containsValue()) {
-
+                    if (alarmas.isEmpty()) {
+                        System.out.println("No hay alarmas creadas...");
+                    } else {
+                        System.out.println("Qué alarma quiere desactivar: ");
+                        for (int i = 0; i < alarmas.size(); i++) {
+                            System.out.println(i + "." + alarmas.get(i).getTelefonoAviso());
                         }
+                        System.out.println("Seleccione el nº correspondiente: : ");
+                        int elecc = Integer.parseInt(br.readLine());
+                        Alarma alarmaSeleccionada = alarmas.get(elecc);
 
+                        int intentos = 3;
+                        int pin;
 
-                        intentos--;
-                        if (intentos == 0) {
-                            System.out.println("La Alarma se ha bloqueado, llame al servicio técnico...");
-                        }
-                    } while (intentos > 0);
+                        do {
+                            System.out.println("Introduzca pin, " + intentos + " intentos");
+                            pin = Integer.parseInt(br.readLine());
+                            if (alarmaSeleccionada.getPin() == pin) {
+                                alarmaSeleccionada.desactivar(pin);
+                                for (int i = 0; i < alarmaSeleccionada.getSensoresMovientos().size(); i++) {
+                                    alarmaSeleccionada.setActivada(false);
+                                    alarmaSeleccionada.getSensoresMovientos().get(i).setAlarma(null);
+                                }
+                                System.out.println("Alarma desactivada correctamente.");
+                                intentos = 0;
+                            } else {
+                                System.out.println("Pin erroneo");
+                                intentos--;
+                            }
+
+                        } while (intentos > 0 );
+
+                        int prueba =0;
+                        break;
+                    }
+                case 3:
+                    System.out.println("Consultar sensores: ");
+                    System.out.println("-------------------------");
+                    System.out.println("Qué alarma quieres consultar?: ");
+                    for (int i = 0; i < alarmas.size(); i++) {
+                        System.out.println(i+"."+alarmas.get(i));
+                    }
+                    System.out.println("Alarma elegida: ");
+                    int indiceElegido = Integer.parseInt(br.readLine());
+                    Alarma alarmaElegida = alarmas.get(indiceElegido);
+
+                    //Consulto si hay alarmas.
+                    if(alarmas.size()==0){
+                        System.out.println("No hay alarmas creadas...");
+
+                    }else if(alarmaElegida.isActivada()) {
+                        //Compruebo que la alarma seleccionada esté activada.
+                        
+                    }
+
 
 
                     break;
             }
 
-        } while (opcion != 4);
-
-
+        } while (opcion != 4) ;
     }
 }
