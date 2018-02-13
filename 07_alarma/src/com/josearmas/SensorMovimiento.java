@@ -1,5 +1,7 @@
 package com.josearmas;
 
+import java.util.Random;
+
 public class SensorMovimiento {
 
     private int umbral;
@@ -16,7 +18,16 @@ public class SensorMovimiento {
 
     public boolean hayMovimiento(){
 
-        return true;
+        boolean movimiento = false;
+
+        Random r = new Random();
+        int aleatorio = r.nextInt(100)+1;
+
+        if( aleatorio>this.umbral){
+            movimiento = true;
+        }
+
+        return movimiento;
     }
 
     public int getUmbral() {

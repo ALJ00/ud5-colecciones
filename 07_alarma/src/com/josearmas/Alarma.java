@@ -49,7 +49,11 @@ public class Alarma {
     }*/
 
     public void consultarSensores() {
-
+        for (int i = 0; i <sensores.size(); i++) {
+            if(sensores.get(i).hayMovimiento()){
+                System.out.println("Sensor "+i+" detecta movimiento "+" llamar al teléfono "+this.telefonoAviso);
+            }
+        }
     }
 
     public void activar() {

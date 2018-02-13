@@ -79,28 +79,28 @@ public class Main {
                 case 3:
                     System.out.println("Consultar sensores: ");
                     System.out.println("-------------------------");
-                    System.out.println("Qué alarma quieres consultar?: ");
-                    for (int i = 0; i < alarmas.size(); i++) {
-                        System.out.println(i+"."+alarmas.get(i));
-                    }
-                    System.out.println("Alarma elegida: ");
-                    int indiceElegido = Integer.parseInt(br.readLine());
-                    Alarma alarmaElegida = alarmas.get(indiceElegido);
-
-                    //Consulto si hay alarmas.
                     if(alarmas.size()==0){
                         System.out.println("No hay alarmas creadas...");
 
-                    }else if(alarmaElegida.isActivada()) {
+                    }else{
+                        //Consulto si hay alarmas.
+                        System.out.println("Qué alarma quieres consultar?: ");
+                        for (int i = 0; i < alarmas.size(); i++) {
+                            System.out.println(i+"."+alarmas.get(i).getTelefonoAviso());
+                        }
+                        System.out.println("Índice de alarma elegida: ");
+                        int indiceElegido = Integer.parseInt(br.readLine());
+                        Alarma alarmaElegida = alarmas.get(indiceElegido);
                         //Compruebo que la alarma seleccionada esté activada.
-                        
+                        if(alarmaElegida.isActivada()) {
+                            //La alarma está activada y compruebo el estado de los sensores
+                            alarmaElegida.consultarSensores();
+                        }else{
+                            System.out.println("No hay movimientos detectados...");
+                        }
                     }
-
-
-
                     break;
             }
-
         } while (opcion != 4) ;
     }
 }

@@ -3,10 +3,8 @@ package com.josearmas;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
 
@@ -23,7 +21,10 @@ public class Main {
        drae.put("casa","Edificio para habitar");
         System.out.println("Definición de casa: "+drae.get("casa"));*/
 
-        HashMap<String, Contacto> agenda = new HashMap<>();
+        HashMap<String, Contacto> agendaKeyTelefono = new HashMap<>();
+        HashMap<String,Contacto> agendaKeyContacto = new HashMap<>();
+
+        List<Contacto> contactosList = new ArrayList<>();
 
 
         int opcion;
@@ -60,15 +61,17 @@ public class Main {
                     System.out.println("Inserte número: ");
                     String numeroTelefono = br.readLine().toUpperCase();
 
-                    //Creo el objeto nuevoContacto y lo añado a la agenda
+                    //Creo el objeto nuevoContacto
                     Contacto nuevoContacto = new Contacto(nombre, apellidos, email);
+                    contactosList.add(nuevoContacto);
 
                     //Compruebo si la agenda contiene el mismo telefono
-                    if (agenda.containsKey(numeroTelefono)) {
+                    if (agendaKeyTelefono.containsKey(numeroTelefono)) {
                         System.out.println("Error, el número introducido ya existe...");
                     } else {
-                        //Inserto en la agenda, introduzco un mapeo en el diccionario
-                        agenda.put(numeroTelefono, nuevoContacto);
+                        //Inserto en ambas agendas, introduzco un mapeo en el diccionario
+                        agendaKeyTelefono.put(numeroTelefono, nuevoContacto);
+                        agendaKeyContacto.put(nombre,nuevoContacto);
                     }
                     espaciosConLineas();
                     break;
@@ -78,14 +81,14 @@ public class Main {
 
                     //Le pido al usuario qué contacto quiere borrar y para ello recorro la agenda foreach
                     System.out.println("Qué contacto desea borrar?: ");
-                    for (Map.Entry<String, Contacto> entry : agenda.entrySet()) {
-                        System.out.println("Contacto: " + entry.getValue().toString() + "---" + "Teléfono: " + entry.getKey());
+                    for (Contacto value : agendaKeyTelefono.values()) {
+                        System.out.println("Contacto: "+value);
                     }
                     System.out.println("Introduzca el teléfono que desea borrar: ");
                     String numeroParaBorrarMapeo = br.readLine().toUpperCase();
-                    agenda.remove(numeroParaBorrarMapeo);
-                    Contacto borradoCorrectamente = agenda.remove(numeroParaBorrarMapeo);
-                    if (agenda.remove(numeroParaBorrarMapeo) == borradoCorrectamente)
+                    agendaKeyTelefono.remove(numeroParaBorrarMapeo);
+                    Contacto borradoCorrectamente = agendaKeyTelefono.remove(numeroParaBorrarMapeo);
+                    if (agendaKeyTelefono.remove(numeroParaBorrarMapeo) == borradoCorrectamente)
                         System.out.println("El contacto se ha borrado correctamente.");
                     espaciosConLineas();
                     break;
@@ -94,21 +97,16 @@ public class Main {
                     System.out.println("Buscar contacto:");
                     System.out.println("---------------------");
                     //Compruebo que la agenda contenga mapeos
-                    if (agenda.isEmpty()) {
+                    if (agendaKeyTelefono.isEmpty()) {
                         System.out.println("Agenda vacía...");
                     } else {
-                        String numero;
-                        do {
-                            System.out.println("Introduzca el número de teléfono para buscar contacto: ");
-                            numero = br.readLine().toUpperCase();
-
-                            if (agenda.get(numero) == null) {
-                                System.out.println("El teléfono no existe, introduzca otro número por favor...");
-                            } else {
-                                System.out.println("Contacto: " + agenda.get(numero) + "--- Teléfono: " + numero);
+                            System.out.println("Introduzca el teléfono para buscar contacto: ");
+                            String numero = br.readLine().toUpperCase();
+                            if(agendaKeyTelefono.containsKey(numero)){
+                                System.out.println(agendaKeyTelefono.get(numero));
+                            }else{
+                                System.out.println("Número erróneo...");
                             }
-
-                        } while (agenda.get(numero) == null);
                     }
                     espaciosConLineas();
                     break;
@@ -117,37 +115,32 @@ public class Main {
                     System.out.println("Búscar contacto por nombre: ");
                     System.out.println("-------------------------------");
                     //Compruebo si hay mapeos en la agenda.
-                    if (agenda.isEmpty()) {
+                    if (agendaKeyContacto.isEmpty()) {
                         System.out.println("Agenda vacía.....");
                     } else {
-                        String nombreAbuscar;
-                        for (Map.Entry<String, Contacto> entry : agenda.entrySet()) {
-                            System.out.println("Introduzca el nombre del contacto que quieres buscar:");
-                            nombreAbuscar = br.readLine().toUpperCase();
-
-                            if (!entry.getValue().getNombre().equalsIgnoreCase(nombreAbuscar)) {
-                                System.out.println("El nombre introducido no pertenece a ningún contacto, inténtelo de nuevo");
-                            } else {
-                                System.out.println(entry.getValue().toString() + "--- Teléfono: " + entry.getKey());
-                            }
-
+                        System.out.println("Introduzca el nombre para buscar contacto: ");
+                        String name= br.readLine().toUpperCase();
+                        if(agendaKeyContacto.containsKey(name)){
+                            System.out.println(agendaKeyContacto.get(name));
+                        }else{
+                            System.out.println("Número erróneo...");
                         }
+
                     }
                     espaciosConLineas();
                     break;
                 case 31:
                     //Listado de todos los contactos, tal como se han añadido.
                     System.out.println("Listado de todos los contactos ordenados por orden de insercción: ");
-                    HashMap<String, Contacto> copiaAgenda = new HashMap<>(agenda);
-                    for (Map.Entry entry : copiaAgenda.entrySet()) {
-                        System.out.println(entry.getValue().toString() + "--- Teléfono: " + entry.getKey());
+                    for (Contacto c:contactosList) {
+                        System.out.println(c);
                     }
                     espaciosConLineas();
                     break;
                 case 32:
                     //Listado de todos los contactos ordenados por números de teléfono.
                     System.out.println("Listado de todos los contactos ordenados por número de teléfono: ");
-                    SortedMap<String, Contacto> copiaAgenda2 = new TreeMap<>(agenda);
+                    SortedMap<String, Contacto> copiaAgenda2 = new TreeMap<>(agendaKeyTelefono);
                     for (Map.Entry entry : copiaAgenda2.entrySet()) {
                         System.out.println("Teléfono: " + entry.getKey() + " ---- " + entry.getValue().toString());
                     }
