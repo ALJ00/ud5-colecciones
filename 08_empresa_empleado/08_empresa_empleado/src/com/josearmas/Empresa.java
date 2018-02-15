@@ -1,7 +1,9 @@
 package com.josearmas;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Empresa {
 
@@ -9,7 +11,7 @@ public class Empresa {
     private String anyoFundacion;
 
     //Conexión
-    private List<Empleado>empleados = new ArrayList<>();
+    private Map<String,Empleado>empleados = new HashMap<>();
 
     public Empresa() {
     }
@@ -31,7 +33,7 @@ public class Empresa {
         return anyoFundacion;
     }
 
-    public List<Empleado> getEmpleados() {
+    public Map<String,Empleado> getEmpleados() {
         return empleados;
     }
 

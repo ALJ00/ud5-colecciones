@@ -21,8 +21,9 @@ public class Main {
        drae.put("casa","Edificio para habitar");
         System.out.println("Definición de casa: "+drae.get("casa"));*/
 
-        HashMap<String, Contacto> agendaKeyTelefono = new HashMap<>();
-        HashMap<String,Contacto> agendaKeyContacto = new HashMap<>();
+        Map<String, Contacto> agendaKeyTelefono = new HashMap<>();
+
+        Map<String,Contacto> agendaKeyContacto = new HashMap<>();
 
         List<Contacto> contactosList = new ArrayList<>();
 
@@ -114,17 +115,19 @@ public class Main {
                     //Buscar contacto por nombre.
                     System.out.println("Búscar contacto por nombre: ");
                     System.out.println("-------------------------------");
+
                     //Compruebo si hay mapeos en la agenda.
                     if (agendaKeyContacto.isEmpty()) {
                         System.out.println("Agenda vacía.....");
                     } else {
                         System.out.println("Introduzca el nombre para buscar contacto: ");
                         String name= br.readLine().toUpperCase();
-                        if(agendaKeyContacto.containsKey(name)){
-                            System.out.println(agendaKeyContacto.get(name));
-                        }else{
-                            System.out.println("Número erróneo...");
-                        }
+                        agendaKeyTelefono.forEach((k,v)->{
+                            if(v.getNombre().equalsIgnoreCase(name)){
+                                System.out.println(v);
+                            }
+                            });
+
 
                     }
                     espaciosConLineas();
@@ -141,9 +144,13 @@ public class Main {
                     //Listado de todos los contactos ordenados por números de teléfono.
                     System.out.println("Listado de todos los contactos ordenados por número de teléfono: ");
                     SortedMap<String, Contacto> copiaAgenda2 = new TreeMap<>(agendaKeyTelefono);
-                    for (Map.Entry entry : copiaAgenda2.entrySet()) {
-                        System.out.println("Teléfono: " + entry.getKey() + " ---- " + entry.getValue().toString());
-                    }
+
+                    copiaAgenda2.forEach((k,v)->{
+                        System.out.println(k);
+
+                        System.out.println(v);
+                    });
+
                     espaciosConLineas();
                     break;
             }

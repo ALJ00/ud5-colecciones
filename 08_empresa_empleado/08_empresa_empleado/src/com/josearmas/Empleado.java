@@ -1,6 +1,6 @@
 package com.josearmas;
 
-public class Empleado {
+public abstract class Empleado {
 
     private String nombre;
     private String apellidos;
