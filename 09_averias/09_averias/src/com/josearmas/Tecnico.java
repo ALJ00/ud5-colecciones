@@ -1,6 +1,7 @@
 package com.josearmas;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Tecnico {
@@ -9,7 +10,7 @@ public class Tecnico {
     private int nivel;
 
     //Asociación.
-    private Map<Integer,Averia> averias = new HashMap<>();
+    private Map<Integer,Averia> averias = new LinkedHashMap<>();
 
     public Tecnico() {
     }

@@ -1,7 +1,5 @@
 package com.josearmas;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,37 +8,41 @@ import java.util.Map;
 
 public class Main {
 
-    public static void listarAverias (Map<Integer,Averia>averias){
+    public static void listarAverias(Map<Integer, Averia> averias) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 
         System.out.println("Seleccione la avería a reparar: ");
 
-        if(averias.isEmpty()){
+        if (averias.isEmpty()) {
             System.out.println("No hay averías pendientes.");
-        }else {
+        } else {
             System.out.println("Qué avería desea atender ?");
             averias.forEach((k, v) -> {
                 System.out.println(k + "---" + v);
             });
+
         }
 
     }
 
 
-
     public static void main(String[] args) throws IOException {
-	// write your code here
+        // write your code here
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        Map<Integer,Tecnico> tecnicosMapMain = new HashMap<>();
+        Map<Integer, Tecnico> tecnicosMapMain = new HashMap<>();
         Map<Integer, Averia> averiasMapMain = new HashMap<>();
         Map<Integer, Averia> averiasMapMainResueltas = new HashMap<>();
+
 
         int opcion;
         int keyTecnico = 0;
         int keyAveria = 0;
 
-        do{
+        do {
             System.out.println("1.Alta de técnico.\n" +
                     "/-------- Gestión de averías --------/\n" +
                     "2.Nueva avería.\n" +
@@ -56,8 +58,7 @@ public class Main {
             opcion = Integer.parseInt(br.readLine());
 
 
-
-            switch (opcion){
+            switch (opcion) {
 
                 case 1:
 
@@ -67,8 +68,8 @@ public class Main {
                     System.out.println("Nivel 1, 2 o 3");
                     int nivel = Integer.parseInt(br.readLine());
 
-                    Tecnico tecnico = new Tecnico(nombre,nivel);
-                    tecnicosMapMain.put(keyTecnico,tecnico);
+                    Tecnico tecnico = new Tecnico(nombre, nivel);
+                    tecnicosMapMain.put(keyTecnico, tecnico);
 
                     keyTecnico++;
 
@@ -85,8 +86,9 @@ public class Main {
                     System.out.println("Nivel: ");
                     int niv = Integer.parseInt(br.readLine());
 
-                    Averia averia = new Averia(titulo,descripcion,fechaApertura,niv);
-                    averiasMapMain.put(keyAveria,averia);
+                    Averia averia = new Averia(titulo, descripcion, fechaApertura, niv);
+
+                    averiasMapMain.put(keyAveria, averia);
                     keyAveria++;
 
 
@@ -103,15 +105,15 @@ public class Main {
                     Averia averiaSeleccionada = averiasMapMain.get(key);
 
                     System.out.println("Elija el técnico a asociar con la avería: ");
-                    tecnicosMapMain.forEach((k,v)->{
-                        System.out.println(k+"---"+v);
+                    tecnicosMapMain.forEach((k, v) -> {
+                        System.out.println(k + "---" + v);
                     });
                     System.out.println("Técnico elegido: ");
                     int keyTec = Integer.parseInt(br.readLine());
 
                     Tecnico tecnicoElegido = tecnicosMapMain.get(keyTec);
 
-                    tecnicoElegido.getAverias().put(key,averiaSeleccionada);
+                    tecnicoElegido.getAverias().put(key, averiaSeleccionada);
                     averiaSeleccionada.setTecnico(tecnicoElegido);
 
                     break;
@@ -121,48 +123,71 @@ public class Main {
 
                     listarAverias(averiasMapMain);
 
-                        System.out.print("Selección: ");
-                        int numero = Integer.parseInt(br.readLine());
+                    System.out.print("Selección: ");
+                    int numero = Integer.parseInt(br.readLine());
 
-                        if( averiasMapMain.get(numero ).resolverAveria()){
-                            //La meto en averias resueltas.
-                            averiasMapMain.get(numero).setFechaApertura("closed");
-                            averiasMapMainResueltas.put(numero,averiasMapMain.get(numero));
-                            
-                            //Elimino las conexiones a la avería que voy a eliminar.
-                            Tecnico seleccionado = averiasMapMain.get(numero).getTecnico();
-                            seleccionado.getAverias().remove(numero);
-                            averiasMapMain.remove(numero);
+                    if (averiasMapMain.get(numero).resolverAveria()) {
+                        //La meto en averias resueltas.
+                        averiasMapMain.get(numero).setFechaApertura("closed");
+                        averiasMapMain.get(numero).setNivel(0);
+                        averiasMapMainResueltas.put(numero, averiasMapMain.get(numero));
+
+                        //Elimino las conexiones a la avería que voy a eliminar.
+                        Tecnico seleccionado = averiasMapMain.get(numero).getTecnico();
+                        seleccionado.getAverias().remove(numero);
+                        averiasMapMain.remove(numero);
 
 
-                        }else{
-                            averiasMapMain.get(numero).setNivel(-1);
-                            averiasMapMain.put(numero,averiasMapMain.get(numero));
-                        }
+                    } else {
+                        int adquirirNivel = averiasMapMain.get(numero).getNivel();
+                        adquirirNivel = adquirirNivel-1;
+                        averiasMapMain.get(numero).setNivel(adquirirNivel);
+                        averiasMapMain.put(numero, averiasMapMain.get(numero));
+                    }
 
                     break;
                 case 5:
                     System.out.println("-------- LISTADO DE AVERÍAS SIN RESOLVER DE UN TÉCNICO -------------");
                     System.out.println("Seleccione un técnico: ");
-                    tecnicosMapMain.forEach((k,v)->{
-                        System.out.println(k+"---"+v);
+                    tecnicosMapMain.forEach((k, v) -> {
+                        System.out.println(k + "---" + v);
                     });
                     System.out.println("Selección: ");
                     int sel = Integer.parseInt(br.readLine());
-                    tecnicosMapMain.get(sel).getAverias().forEach((k,v)->{
-                        System.out.println(k+"---"+v);
+                    tecnicosMapMain.get(sel).getAverias().forEach((k, v) -> {
+                        System.out.println(k + "---" + v);
                     });
+
+                    break;
+                case 6:
+                    System.out.println("---------------- AVERIAS ABIERTAS ------------------");
+                    for (int i = 0; i < averiasMapMain.size(); i++) {
+                        System.out.println(averiasMapMain.get(i));
+                    }
+
+                    System.out.println("---------------- AVERIAS CERRADAS ----------------");
+                    for (int i = 0; i < averiasMapMain.size(); i++) {
+                        System.out.println(averiasMapMainResueltas.get(i));
+                    }
+
+                    break;
+
+                case 7:
+                    System.out.println("---------------- LISTADO DE TODAS LAS AVERÍAS DEL SISTEMA -----------------");
+
+                    Map<Integer, Averia> copiaAverias = new HashMap<>(averiasMapMain);
+                    copiaAverias.putAll(averiasMapMainResueltas);
+
+                    copiaAverias.forEach((k, v) -> {
+                        System.out.println(k + "---" + v);
+                    });
+
 
                     break;
             }
 
 
-
-        }while( opcion!= 8 );
-
-
-
-
+        } while (opcion != 8);
 
 
     }
