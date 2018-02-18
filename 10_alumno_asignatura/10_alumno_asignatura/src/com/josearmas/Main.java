@@ -67,7 +67,9 @@ public class Main {
                         System.out.println("Elije el número correspondiente: ");
                         int eleccion = Integer.parseInt(br.readLine());
 
-                        alumnosMapMain.get(eleccion).getAsignaturasAlumno().clear();//1
+                        Alumno alumnoAborrar = alumnosMapMain.get(eleccion);
+
+                        alumnoAborrar.getAsignaturasAlumno().clear();
                         alumnosMapMain.remove(eleccion);//2
 
                         int tres = 0;
@@ -112,7 +114,6 @@ public class Main {
                         Asignatura asignaturaAborrar = asignaturasMapMain.get(eleccion);
                         asignaturaAborrar.getAlumnosAsignatura().clear();
                         asignaturasMapMain.remove(eleccion);
-
                     }
 
                     int uno = 0;
@@ -128,7 +129,6 @@ public class Main {
                     System.out.println("Alumno elegido: ");
                     int numero = Integer.parseInt(br.readLine());
                     Alumno alumnoAmatricular = alumnosMapMain.get(numero);
-
                     if(asignaturasMapMain.size()==0){
                         System.out.println("No hay asignaturas...");
                     }else{
@@ -144,8 +144,6 @@ public class Main {
                         alumnoAmatricular.getAsignaturasAlumno().put(numAsig, asignaturaEscogida);
                         asignaturaEscogida.getAlumnosAsignatura().put(numero, alumnoAmatricular);
                     }
-
-
                     break;
                 case 6:
                     System.out.println("------------ LISTADO DE ALUMNOS MATRICULADOS EN UNA ASIGNATURA -------------------");
@@ -161,9 +159,44 @@ public class Main {
                     asignaturaElegida.getAlumnosAsignatura().forEach((k,v)->{
                         System.out.println(k+"---"+v);
                     });
-
                     break;
 
+                case 7:
+                    System.out.println("---------------- LISTADO DE ASIGNATURAS EN LAS QUE ESTÁ MATRICULADO UN ALUMNO ---------------");
+                    System.out.println("Elija el alumno a consultar: ");
+
+                    for (Map.Entry entry:alumnosMapMain.entrySet()) {
+                        System.out.println(entry.getKey()+"--"+entry.getValue());
+                    }
+                    System.out.println("Elección: ");
+                    int el = Integer.parseInt(br.readLine());
+                    Alumno alumSelec = alumnosMapMain.get(el);
+                    alumSelec.getAsignaturasAlumno().forEach((k,v)->{
+                        System.out.println(k+"--"+v);
+                    });
+                    break;
+                case 8:
+                    System.out.println("-------------- LISTADO DE TODOS LOS ALUMNOS --------------------");
+
+                    int totalHoras = 0;
+
+                    for (int i = 0; i <alumnosMapMain.size(); i++) {
+                        System.out.println("El alumno "+alumnosMapMain.get(i).getNombre()+" cursa un total de "+
+                                alumnosMapMain.get(i).totalHoras()+" horas semanales."
+                        );
+                    }
+
+                    System.out.println();
+
+                    for (int i = 0; i <alumnosMapMain.size(); i++) {
+                        for (int j = 0; j < asignaturasMapMain.size(); j++) {
+                           totalHoras = totalHoras + asignaturasMapMain.get(j).getHorasSemanales();
+                            System.out.println("El alumno "+alumnosMapMain.get(i).getNombre()+" cursa un total de "+totalHoras
+                            );
+                        }
+                    }
+
+                    break;
 
             }
 

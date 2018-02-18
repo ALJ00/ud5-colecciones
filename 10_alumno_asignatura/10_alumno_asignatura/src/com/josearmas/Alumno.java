@@ -21,6 +21,15 @@ public class Alumno {
     public Alumno() {
     }
 
+    public int totalHoras(){
+        int horasTotales =0;
+        for (int i = 0; i < asignaturasAlumno.size(); i++) {
+            horasTotales = horasTotales+asignaturasAlumno.get(i).getHorasSemanales();
+        }
+
+        return horasTotales;
+    }
+
     public String getNombre() {
         return nombre;
     }
