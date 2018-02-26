@@ -1,8 +1,6 @@
 package com.josearmas;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Tecnico {
 
@@ -10,7 +8,7 @@ public class Tecnico {
     private int nivel;
 
     //Asociación.
-    private Map<Integer,Averia> averias = new LinkedHashMap<>();
+    private Queue<Averia> averias = new LinkedList<>();
 
     public Tecnico() {
     }
@@ -36,7 +34,7 @@ public class Tecnico {
         this.nivel = nivel;
     }
 
-    public Map<Integer, Averia> getAverias() {
+    public Queue< Averia> getAverias() {
         return averias;
     }
 

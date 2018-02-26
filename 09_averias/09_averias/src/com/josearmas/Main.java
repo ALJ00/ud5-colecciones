@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 public class Main {
 
@@ -34,8 +36,9 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         Map<Integer, Tecnico> tecnicosMapMain = new HashMap<>();
-        Map<Integer, Averia> averiasMapMain = new HashMap<>();
+        Queue< Averia> averiasMapMain = new LinkedList<>();
         Map<Integer, Averia> averiasMapMainResueltas = new HashMap<>();
+
 
 
         int opcion;
@@ -62,125 +65,68 @@ public class Main {
 
                 case 1:
 
-                    System.out.println("Nuevo técnico: ");
-                    System.out.println("Nombre: ");
-                    String nombre = br.readLine().toUpperCase();
-                    System.out.println("Nivel 1, 2 o 3");
-                    int nivel = Integer.parseInt(br.readLine());
 
-                    Tecnico tecnico = new Tecnico(nombre, nivel);
-                    tecnicosMapMain.put(keyTecnico, tecnico);
 
-                    keyTecnico++;
+
 
                     break;
                 case 2:
+                    System.out.println("-------- NUEVA AVERÍA --------");
 
-                    System.out.println("---------- NUEVA AVERIA ------------");
-                    System.out.println("Titulo: ");
+                    System.out.println("Título: ");
                     String titulo = br.readLine().toUpperCase();
                     System.out.println("Descripción: ");
-                    String descripcion = br.readLine().toUpperCase();
+                    String descripción = br.readLine().toUpperCase();
                     System.out.println("Fecha de apertura: ");
-                    String fechaApertura = br.readLine().toUpperCase();
+                    String fecha = br.readLine().toUpperCase();
                     System.out.println("Nivel: ");
-                    int niv = Integer.parseInt(br.readLine());
+                    int nivel = Integer.parseInt(br.readLine());
 
-                    Averia averia = new Averia(titulo, descripcion, fechaApertura, niv);
+                    averiasMapMain.add(new Averia(titulo,descripción,fecha,nivel));
 
-                    averiasMapMain.put(keyAveria, averia);
-                    keyAveria++;
+                    if(tecnicosMapMain.size()==0){
+                        System.out.println("Crea un técnico....");
+                    }else{
+                        System.out.println("Elije un técnico: ");
+                        tecnicosMapMain.forEach((k,v)->{
+                            System.out.println(k+"---"+v);
+                        });
+                        int eleccion = Integer.parseInt(br.readLine());
 
+                        Tecnico tecnicoSeleccionado = tecnicosMapMain.get(eleccion);
 
+                        tecnicoSeleccionado.getAverias().add(averiasMapMain.element());
+
+                        averiasMapMain.element().setTecnico(tecnicoSeleccionado);
+                    }
                     break;
 
                 case 3:
                     System.out.println("------------ ASIGNAR AVERIA A TÉCNICO ------------");
 
-                    listarAverias(averiasMapMain);
-
-                    System.out.print("Avería seleccionada: ");
-                    int key = Integer.parseInt(br.readLine());
-
-                    Averia averiaSeleccionada = averiasMapMain.get(key);
-
-                    System.out.println("Elija el técnico a asociar con la avería: ");
-                    tecnicosMapMain.forEach((k, v) -> {
-                        System.out.println(k + "---" + v);
-                    });
-                    System.out.println("Técnico elegido: ");
-                    int keyTec = Integer.parseInt(br.readLine());
-
-                    Tecnico tecnicoElegido = tecnicosMapMain.get(keyTec);
-
-                    tecnicoElegido.getAverias().put(key, averiaSeleccionada);
-                    averiaSeleccionada.setTecnico(tecnicoElegido);
 
                     break;
 
                 case 4:
                     System.out.println("------- ATENDER AVERÍA -------");
 
-                    listarAverias(averiasMapMain);
 
-                    System.out.print("Selección: ");
-                    int numero = Integer.parseInt(br.readLine());
-
-                    if (averiasMapMain.get(numero).resolverAveria()) {
-                        //La meto en averias resueltas.
-                        averiasMapMain.get(numero).setFechaApertura("closed");
-                        averiasMapMain.get(numero).setNivel(0);
-                        averiasMapMainResueltas.put(numero, averiasMapMain.get(numero));
-
-                        //Elimino las conexiones a la avería que voy a eliminar.
-                        Tecnico seleccionado = averiasMapMain.get(numero).getTecnico();
-                        seleccionado.getAverias().remove(numero);
-                        averiasMapMain.remove(numero);
-
-
-                    } else {
-                        int adquirirNivel = averiasMapMain.get(numero).getNivel();
-                        adquirirNivel = adquirirNivel-1;
-                        averiasMapMain.get(numero).setNivel(adquirirNivel);
-                        averiasMapMain.put(numero, averiasMapMain.get(numero));
-                    }
 
                     break;
                 case 5:
-                    System.out.println("-------- LISTADO DE AVERÍAS SIN RESOLVER DE UN TÉCNICO -------------");
-                    System.out.println("Seleccione un técnico: ");
-                    tecnicosMapMain.forEach((k, v) -> {
-                        System.out.println(k + "---" + v);
-                    });
-                    System.out.println("Selección: ");
-                    int sel = Integer.parseInt(br.readLine());
-                    tecnicosMapMain.get(sel).getAverias().forEach((k, v) -> {
-                        System.out.println(k + "---" + v);
-                    });
+
 
                     break;
                 case 6:
                     System.out.println("---------------- AVERIAS ABIERTAS ------------------");
-                    for (int i = 0; i < averiasMapMain.size(); i++) {
-                        System.out.println(averiasMapMain.get(i));
-                    }
 
-                    System.out.println("---------------- AVERIAS CERRADAS ----------------");
-                    for (int i = 0; i < averiasMapMain.size(); i++) {
-                        System.out.println(averiasMapMainResueltas.get(i));
-                    }
 
                     break;
 
                 case 7:
                     System.out.println("---------------- LISTADO DE TODAS LAS AVERÍAS DEL SISTEMA -----------------");
 
-                    Map<Integer, Averia> copiaAverias = new HashMap<>(averiasMapMain);
-                    copiaAverias.putAll(averiasMapMainResueltas);
 
-                    copiaAverias.forEach((k, v) -> {
-                        System.out.println(k + "---" + v);
-                    });
 
 
                     break;
